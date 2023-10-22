@@ -30,20 +30,20 @@ view_manager = stats.view_manager
 # Logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-handler = AzureLogHandler(connection_string=f'InstrumentationKey={INSTRUMENTATION_KEY};')
+handler = AzureLogHandler(connection_string=f'InstrumentationKey={INSTRUMENTATION_KEY}')
 handler.setFormatter(logging.Formatter('%(message)s'))
 logger.addHandler(handler)
 
 # Metrics
 exporter = metrics_exporter.new_metrics_exporter(
   enable_standard_metrics=True,
-  connection_string=f'InstrumentationKey={INSTRUMENTATION_KEY};')
+  connection_string=f'InstrumentationKey={INSTRUMENTATION_KEY}')
 view_manager.register_exporter(exporter)
 
 # Tracing
 tracer = Tracer(
     exporter=AzureExporter(
-        connection_string=f'InstrumentationKey={INSTRUMENTATION_KEY};'),
+        connection_string=f'InstrumentationKey={INSTRUMENTATION_KEY}'),
     sampler=ProbabilitySampler(1.0),
 )
 
@@ -53,7 +53,7 @@ app = Flask(__name__)
 # Requests
 middleware = FlaskMiddleware(
     app,
-    exporter=AzureExporter(connection_string=f"InstrumentationKey={INSTRUMENTATION_KEY};"),
+    exporter=AzureExporter(connection_string=f"InstrumentationKey={INSTRUMENTATION_KEY}"),
     sampler=ProbabilitySampler(rate=1.0)
 )
 
