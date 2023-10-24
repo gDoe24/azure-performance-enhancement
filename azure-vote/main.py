@@ -29,10 +29,12 @@ view_manager = stats.view_manager
 
 # Logging
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 handler = AzureLogHandler(connection_string=f'InstrumentationKey={INSTRUMENTATION_KEY}')
 handler.setFormatter(logging.Formatter('%(message)s'))
+logger.setLevel(logging.INFO)
 logger.addHandler(handler)
+eventHandler = AzureEventHandler(connection_string=f"InstrumentationKey={INSTRUMENTATION_KEY}")
+logger.addHandler(eventHandler)
 
 # Metrics
 exporter = metrics_exporter.new_metrics_exporter(
